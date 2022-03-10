@@ -19,6 +19,7 @@ Change the variables at the begining of the file to suit your preferences.
 
 - Put it in `/usr/bin` with executable permission (`chmod +x fancontrol`).
 - It works without doing anything (check CPU temperature every 20s)
+- Or you can turn ON/OFF Manually with `fancontrol -i`
 ````
 -h, --help            show this help message and exit
 -i, --on              Turn the fan on.
@@ -31,3 +32,5 @@ Note : it require sudo permission.
 
 ## Todo
 - [ ] Change the temperature detection process 
+- [ ] Clean the code / follow conventions
+- [ ] ? Modifiy to set the temperature check with a switch
