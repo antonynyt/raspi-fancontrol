@@ -1,0 +1,9 @@
+[Unit]
+Description=Check to enable fan every 30s
+
+[Timer]
+OnBootSec=20
+OnUnitActiveSec=20
+
+[Install]
+WantedBy=timers.target

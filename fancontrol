@@ -1,0 +1,66 @@
+#!/usr/bin/python
+
+TEMPERATURE = 60
+GPIO_OUTPUT = 14
+SERVICE_TIMER = "fancontrol"
+
+import subprocess
+import RPi.GPIO as GPIO
+import argparse
+import os
+
+#SET THE ARGUMENTS
+parser = argparse.ArgumentParser(prog='RasPi Fan Control', description='Control the RaspberryPi Fan and auto turn it on/off.')
+
+parser.add_argument("-i", "--on", help="Turn the fan on.", action="store_true", default=False)
+parser.add_argument("-o", "--off", help="Turn the fan off.", action="store_true", default=False)
+parser.add_argument("-t", "--temperature", help="Print the CPU Temperature", action="store_true", default=False)
+parser.add_argument("--timer", choices=["start","stop"], help="Start or Stop the systemd timer to manualy control the fan.")
+parser.add_argument("--status", help="Print the timer status. If it's turned On or Off.", action="store_true", default=False)
+
+args = parser.parse_args()
+
+#SETUP THE GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(GPIO_OUTPUT, GPIO.OUT)
+
+#GET THE TEMPERATURE OUT OF THE SENSORS CMD
+p1 = subprocess.Popen(('sensors'), stdout=subprocess.PIPE)
+p2 = subprocess.check_output(('grep', '-o', '[0-9]*\.[0-9]*'), stdin=p1.stdout)
+
+#CLEAN THE GREP OF THE SENSORS CMD
+temp = p2.strip()
+temp = str(temp)
+temp = temp.replace("b","")
+temp = temp.replace("'","")
+temp = float(temp)
+
+#PRINT THE TEMPERATURE
+if args.temperature is True :
+    print("CPU is", str(temp)+"°")
+    exit()
+
+#PRINT THE STATUS
+if args.status == True:
+    os.system("systemctl status " + SERVICE_TIMER + ".timer")
+    exit()
+
+#START/STOP SYSTEMD TIMER
+if args.timer == "start":
+    os.system("systemctl start " + SERVICE_TIMER + ".timer")
+    print("Systemd " + SERVICE_TIMER + ".timer started")
+    if not(args.on == True or args.off == True) : exit()
+elif args.timer == "stop":
+    os.system("systemctl stop " + SERVICE_TIMER + ".timer")
+    print("Systemd " + SERVICE_TIMER + ".timer stopped")
+    if not(args.on == True or args.off == True) : exit()
+    
+
+#TURN ON / OFF FAN
+if temp >= TEMPERATURE or args.on is True:
+    GPIO.output(GPIO_OUTPUT,1)
+    print("FAN IS TURNED ON /", "CPU is:", str(temp)+"°") 
+elif temp < TEMPERATURE or args.off is True:
+    GPIO.output(GPIO_OUTPUT,0)
+    print("FAN IS TURNED OFF /","CPU is:", str(temp)+"°")

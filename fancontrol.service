@@ -1,0 +1,7 @@
+[Unit]
+Description=Auto Enable Fan
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/fancontrol
+[Install]
+WantedBy=multi-user.target
