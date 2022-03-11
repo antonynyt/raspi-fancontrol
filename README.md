@@ -34,3 +34,4 @@ Note : it require sudo permission.
 - [ ] Change the temperature detection process 
 - [ ] Clean the code / follow conventions
 - [ ] ? Modifiy to set the temperature check with a switch
+- [ ] Start the fan for a set time in seconds
