@@ -10,7 +10,7 @@ import argparse
 import os
 
 #SET THE ARGUMENTS
-parser = argparse.ArgumentParser(prog='RasPi Fan Control', description='Control the RaspberryPi Fan and auto turn it on/off.')
+parser = argparse.ArgumentParser(description='Control the RaspberryPi Fan and auto turn it on/off.')
 
 parser.add_argument("-i", "--on", help="Turn the fan on.", action="store_true", default=False)
 parser.add_argument("-o", "--off", help="Turn the fan off.", action="store_true", default=False)
