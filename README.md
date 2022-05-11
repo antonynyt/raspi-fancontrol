@@ -29,9 +29,11 @@ Change the variables at the begining of the file to suit your preferences.
 --status              Print the timer status. If it's turned On or Off.
 ````
 Note : it require sudo permission.
+/!\ The script can be used by bad people to do something else since you have write permission. A fix can be to only authorize root to write the executable. I need to investigate further.
 
 ## Todo
 - [ ] Change the temperature detection process 
 - [ ] Clean the code / follow conventions
 - [ ] ? Modifiy to set the temperature check with a switch
 - [ ] Start the fan for a set time in seconds
+- [ ] Investigate security issues
