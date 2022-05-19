@@ -28,8 +28,8 @@ Change the variables at the begining of the file to suit your preferences.
 --timer {start,stop}  Start or Stop the systemd timer to manualy control the fan.
 --status              Print the timer status. If it's turned On or Off.
 ````
-Note : it require sudo permission.
-/!\ The script can be used by bad people to do something else since you have write permission. A fix can be to only authorize root to write the executable. I need to investigate further.
+Note : it require sudo permission.<br>
+/!\ Be carful which permission you give the file.
 
 ## Todo
 - [ ] Change the temperature detection process 
